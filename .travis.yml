@@ -22,3 +22,18 @@ after_success:
   - docker push hoplite2000/fibonacci-nginx
   - docker push hoplite2000/fibonacci-server
   - docker push hoplite2000/fibonacci-worker  
+
+# Deploy to AWS elastic beanstalk #
+#deploy:
+#  edge: true
+#  provider: elasticbeanstalk
+#  region: "us-west-2"
+#  app: "docker-fibonacci"
+#  env: "DockerFibonacci-env"
+#  bucket_name: "elasticbeanstalk-us-west-2-309878938"
+#  bucket_path: "docker-fibonacci"
+#  on:
+#    branch: main
+# Set API keys from AWS to Travis CI environment variables #
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key: $AWS_SECRET_KEY
