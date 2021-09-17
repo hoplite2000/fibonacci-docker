@@ -1,0 +1,13 @@
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY ./package.json ./
+RUN npm install
+
+# Avoid EACCES: permission denied, mkdir '/app/node_modules/.cache'
+RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
+
+COPY ./ ./
+
+CMD ["npm", "run", "start"]
