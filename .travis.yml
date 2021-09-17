@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t hoplite2000/fibonacci-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true hoplite2000/fibonacci-test npm run test
+
+after_success:
+  - docker build -t hoplite2000/fibonacci-client ./client
+  - docker build -t hoplite2000/fibonacci-nginx ./nginx
+  - docker build -t hoplite2000/fibonacci-server ./server
+  - docker build -t hoplite2000/fibonacci-worker ./worker
+
+  # Login to docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Push to dockerhub
+  - docker push hoplite2000/fibonacci-client
+  - docker push hoplite2000/fibonacci-nginx
+  - docker push hoplite2000/fibonacci-server
+  - docker push hoplite2000/fibonacci-worker  
